@@ -1,9 +1,27 @@
-Robot gồm:
-- Servo MG996R
-- Servo SG90
+Map: thử thách teamwork đưa khối hộp qua xe đẩy đến "thành" để chắn banh
+https://www.facebook.com/share/p/zA2EC9nEmPhrFKnN/
+
+Robot 1:
+Cấu tạo: 4 bánh
+- 2 Servo MG996R
+- 2 Servo SG90
 - HC06
 - Động cơ giảm tốc
 - Arduino Uno
 ...
+Cơ chế robot: hệ thống ròng rọc nâng hạ
+Vấn đề:
+- Lý thuyết hoá
+- Gặp vấn đề trong khâu lựa chọn vật liệu phù hợp
 
+Robot 2: 3 bánh (trong đó có 1 bánh xe đa hướng)
+Cấu tạo:
+- 4 Servo SG90
+- HC05
+- Động cơ giảm tốc
+- Arduino Uno
+...
+Cơ chế robot: đẩy và cố định vật thể
+Vấn đề:
+- Xây dựng với vai trò là supporter của robot 1 -> không hoạt động ổn định 1 mình
 
