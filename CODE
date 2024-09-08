@@ -1,0 +1,152 @@
+#include <SoftwareSerial.h>
+#include <Servo.h>
+SoftwareSerial mybluetooth(0,1); //TX,RX(cua mach)  // create servo object to control a servo
+Servo sevorxanh2;
+Servo sevorxanh1;
+Servo servoden;
+
+char giatri;
+int tocdo=150;
+
+int ena=5;
+int in1=2;
+int in2=4;
+int in3=7;
+int in4=8;
+int enb=11;
+int gocx1 = 0;// this pin must be of those with PWM ~xanh
+int gocx2 = 0;
+int gocd1 = 0;    // initial angle  for servo
+
+void setup()
+{
+  mybluetooth.begin(9600);  
+  Serial.begin(9600);
+  pinMode(ena,OUTPUT);
+  pinMode(enb,OUTPUT);
+  pinMode(in1,OUTPUT);
+  pinMode(in2,OUTPUT);
+  pinMode(in3,OUTPUT);
+  pinMode(in4,OUTPUT); 
+  // analogWrite(ena,tocdo);
+  // analogWrite(enb,tocdo);
+   
+  servoden.attach(3);         
+  sevorxanh1.attach(9);  
+  sevorxanh2.attach(6);  
+
+
+}
+void dung() {
+  
+  digitalWrite(in1,LOW);  
+  digitalWrite(in2,LOW);
+  digitalWrite(in3,LOW);  
+  digitalWrite(in4,LOW); 
+  Serial.println("dung ne");
+}
+void tien() {
+  analogWrite(ena,tocdo);
+  digitalWrite(in1,LOW);
+  digitalWrite(in2,HIGH);
+  analogWrite(enb,tocdo); 
+  digitalWrite(in3,HIGH);
+  digitalWrite(in4,LOW);
+  Serial.println("tien ne");
+  }
+void phai(){
+  analogWrite(ena,tocdo);
+  digitalWrite(in1,HIGH);
+  digitalWrite(in2,LOW);
+  analogWrite(enb,tocdo);
+  digitalWrite(in3,HIGH);
+  digitalWrite(in4,LOW);
+    }
+
+void trai(){
+  analogWrite(ena,tocdo);
+  digitalWrite(in1,LOW);
+  digitalWrite(in2,HIGH);
+  analogWrite(enb,tocdo);
+  digitalWrite(in3,LOW);
+  digitalWrite(in4,HIGH);
+    }
+
+void lui(){
+  analogWrite(ena,tocdo);
+  digitalWrite(in1,HIGH);
+  digitalWrite(in2,LOW);
+  analogWrite(enb,tocdo);
+  digitalWrite(in3,LOW);
+  digitalWrite(in4,HIGH);
+    }
+
+void loop(){
+  if (mybluetooth.available()>0){
+      giatri=mybluetooth.read();
+
+//in tín hiệu bluetooth ra màn hình    
+  Serial.println(giatri);
+
+  if (giatri == 'S') dung();
+
+
+  else if (giatri == 'F') tien();
+  
+  
+  else if (giatri == 'B') lui();
+    
+  
+  
+  else if (giatri == 'R') phai();
+    
+  
+  
+  else if (giatri == 'L') trai();
+    
+
+  // change the angle for next time through the loop:
+  else if (giatri== 'U')
+  {
+    // gocd++;
+    servoden.write(135); // move the servo to desired angle
+    delay(600);
+    servoden.write(90);
+  }
+
+  else if (giatri=='W')
+  {
+    // gocd--;
+    servoden.write(45); // move the servo to desired angle
+    delay(600);
+    servoden.write(90);
+  }
+  else if (giatri=='V')
+  {
+    // gocd--;
+    servoden.write(90);
+  }
+  
+  else if (giatri == 'V') 
+   {
+    for(gocx1 = 0; gocx1 < 180; gocx1 ++)
+   { 
+        sevorxanh1.write(gocx1);
+    }
+    for(gocx2 = 180; gocx2 >=0; gocx2 --)
+   { 
+        sevorxanh2.write(gocx2);
+    }
+   }
+    
+  else if (giatri =='v')
+    {
+      for(gocx1 = 180; gocx1>=1; gocx1--) {                           
+        sevorxanh1.write(gocx1);
+    }
+    for(gocx2 = 0; gocx2<180; gocx2++) {                           
+        sevorxanh2.write(gocx2);
+    }
+    }
+  }
+}
